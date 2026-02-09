@@ -1,0 +1,15 @@
+{
+  "project_name": "Unknown",
+  "current_phase": "0_SOLICITATION",
+  "health_status": "Healthy",
+  "active_role_id": "00",
+  "last_updated": "",
+  "completed_milestones": [],
+  "pending_tasks": [],
+  "critical_blockers": [],
+  "artifacts": {
+    "specs": [],
+    "docs": [],
+    "deployments": []
+  }
+}

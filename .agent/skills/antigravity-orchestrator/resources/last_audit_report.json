@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "Hardcoded AWS Keys",
+    "status": "PASSED",
+    "defender": "01",
+    "timestamp": "2026-02-09T07:33:02.467862"
+  },
+  {
+    "scenario": "Broken Logic Loop",
+    "status": "PASSED",
+    "defender": "05",
+    "timestamp": "2026-02-09T07:33:02.705101"
+  },
+  {
+    "scenario": "Ghost Import",
+    "status": "PASSED",
+    "defender": "MOCK_GEN",
+    "timestamp": "2026-02-09T07:33:03.088706"
+  },
+  {
+    "scenario": "Expert Role Collision",
+    "status": "PASSED",
+    "defender": "COUNCIL",
+    "timestamp": "2026-02-09T07:33:03.092869"
+  },
+  {
+    "scenario": "Weak Hashing Algorithm",
+    "status": "PASSED",
+    "defender": "01",
+    "timestamp": "2026-02-09T07:33:03.096138"
+  },
+  {
+    "scenario": "Linear Scan Bottleneck",
+    "status": "PASSED",
+    "defender": "10",
+    "timestamp": "2026-02-09T07:33:03.099660"
+  }
+]

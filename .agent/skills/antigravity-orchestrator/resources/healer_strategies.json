@@ -1,0 +1,35 @@
+{
+    "strategies": [
+        {
+            "pattern": "ModuleNotFoundError",
+            "diagnosis": "Missing Python dependency",
+            "action": "install_package",
+            "command_template": "pip install {package_name}"
+        },
+        {
+            "pattern": "Cannot find module",
+            "diagnosis": "Missing Node.js dependency",
+            "action": "install_package",
+            "command_template": "npm install {package_name}"
+        },
+        {
+            "pattern": "command not found",
+            "diagnosis": "Missing system tool",
+            "action": "check_path_or_install",
+            "command_template": "which {tool_name} || echo 'Please install {tool_name}'"
+        },
+        {
+            "pattern": "port already in use",
+            "diagnosis": "Port conflict",
+            "action": "kill_process",
+            "command_template": "npx kill-port {port}"
+        },
+        {
+            "pattern": "syntax error",
+            "diagnosis": "Code syntax issue",
+            "action": "summon_expert",
+            "target_role": "00",
+            "instruction": "Analyze the syntax error and apply a fix using `replace_file_content`."
+        }
+    ]
+}

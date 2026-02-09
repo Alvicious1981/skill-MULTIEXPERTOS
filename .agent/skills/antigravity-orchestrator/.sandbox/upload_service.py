@@ -1,0 +1,2 @@
+AWS_SECRET = 'AKIAJSDF789S7DF8SDF9'
+def upload(): pass
