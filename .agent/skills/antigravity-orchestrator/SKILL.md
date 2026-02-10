@@ -38,72 +38,30 @@ When delegating, you MUST select the most appropriate Expert from the following 
 | **09** | **MOBILE** | Client-side Mobile Implementation (iOS/Android) | `react-native-cli`, `flutter` |
 | **10** | **DATA_SCIENTIST** | Data Analysis, ML Models, Analytics | `python-pandas`, `jupyter` |
 
-## 🚀 Execution Protocol
+## 🚀 Execution Protocol (Lazy Loading)
 
-1.  **Analyze Request**: Understand the user's intent and required outcome.
-2.  **Context Analysis (Deterministic)**: Run `python .agent/skills/antigravity-orchestrator/scripts/orchestrator.py` to get the "Ground Truth".
-3.  **Check State**: Read `project-state.json` (if available) to determine phase.
-4.  **Discover Skills**: ALWAYS run `find-skills` to identify available capabilities.
-4.  **Discover Skills**: ALWAYS run `find-skills` to identify available capabilities.
-5.  **Delegate**:
-    *   Select the precise Role ID (00-10).
-    *   Formulate a clear Mission Brief.
-    *   Output the delegation block.
-6.  **Update State**: Upon completion of a milestone, manually update `project-state.json` or request the user to do so to maintain persistence.
+1.  **Analyze Request**: Understand the user's intent.
+2.  **On-Demand Context**: Only read files, check `project-state.json`, or run `orchestrator.py` IF the current context is insufficient to fulfill the request.
+3.  **Discovery**: Run `find-skills` only if task-specific capabilities are needed and unknown.
+4.  **Delegate**: Select Role ID (00-10) and output the delegation block.
 
-## ⚔️ Council of Experts (Debate Protocol)
+## 🛡️ Role Matrix (Concise)
+00: **Manager** (Strategy/Coordination) | 01: **Auditor** (Security) | 02: **Architect** (Design) | 03: **DevOps** (Infra) | 04: **Docs** (Tech Writing) | 05: **QA** (Testing) | 06: **DB** | 07: **UI/UX** | 08: **API** | 09: **Mobile** | 10: **Data**
 
-**TRIGGER**: If `Complexity > 8` (Scale 1-10) OR `Risk Environment` (Auth/Payments/Crypto).
+## ⚔️ Efficiency Protocols
 
-1.  **Do NOT** delegate to a single expert.
-2.  **Summon**: Call **ARCHITECT (02)** AND **AUDITOR (01)** simultaneously.
-3.  **Debate**: Force a 2-turn conversation using `resources/debate_template.md`.
-    *   *Turn 1*: Architect proposes.
-    *   *Turn 2*: Auditor critiques/vetoes.
-4.  **Consensus**: Manager synthesizes the final path in the "Consensus Resolution" block.
-
-## 🔌 Decoupled Development (Mock First)
-
-**RULE**: External dependencies (Stripe, AWS, Supabase) should be mocked during Phase 1-3.
-
-1.  **Manager**: Before delegating to Role 08 (API) or Role 06 (DB), check if the environment has credentials.
-2.  **Mock Generation**: If credentials are missing, run `scripts/mock_generator.py` to create a local mock.
-3.  **Validation**: Role 05 (QA) must verify the implementation against the Mock before attempting real integration.
-
-## 🏗️ Autonomous Refactoring (Architect's Patrol)
-
-**TRIGGER**: If `refactor_patrol.py` detects complexity > threshold.
-
-1.  **Refactor Proposal**: Role 02 (Architect) must draft a "Refactor Specification".
-2.  **Safety First**: Role 05 (QA) must run existing tests in "Shadow Mode" before any change.
-3.  **Implementation**: Role 03 applies the refactor following the Spec.
-4.  **Consolidation**: Evolver (Phase 9) records the pattern to prevent future entropy.
-
-## 🚑 The Healer Protocol (Self-Correction)
-
-**TRIGGER**: If ANY tool execution returns `Exit Code != 0` or `Error`.
-
-1.  **Do NOT** return to user immediately.
-2.  **Analyze**: Read `resources/healer_strategies.json` to process the error.
-3.  **Remediate**:
-    *   If a known pattern (e.g., missing module) -> Execute the fix (e.g., `pip install`).
-    *   If unknown -> Summon **Role 00 (Manager)** to perform Root Cause Analysis (RCA).
-4.  **Retry**: Re-execute the original task *once* after applying the fix.
+*   **Council (Debate)**: OPTIONAL. Use only for irreversible/high-risk decisions.
+*   **The Healer (Correction)**: If a tool fails, report the error to the user immediately. Do not enter silent loops. 
+*   **Mock First**: Recommended for early phases. Use real resources if credentials/env are already verified.
 
 ## 📝 Delegation Format
 
-
 ```markdown
-🧠 PLANIFICACIÓN: [Strategic Overview]
-🔎 SKILL DISCOVERY: [Result of find-skills]
-👉 DELEGACIÓN:
-  * Experto: [Role Name] (ID: [XX])
-  * Tarea: [Specific Instruction]
-  * Herramientas Sugeridas: [Tools]
+🧠 PLAN: [Short strategy]
+👉 DELEGACIÓN: Role [ID] - [Specific Instruction] 
 ```
 
 ## 🔗 Verified Resources
 
 *   **System Roles Masterfile**: `D:\skill MULTIEXPERTOS\system_roles_masterfile.md` (Placeholder)
-*   **Protocol Source**: `D:\skill MULTIEXPERTOS\setup_antigravity.md`
 

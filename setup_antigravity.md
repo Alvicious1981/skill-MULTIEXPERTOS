@@ -8,9 +8,14 @@ El núcleo de esta transformación reside en la capacidad del sistema para desco
 
 Este informe técnico proporciona un análisis exhaustivo y directrices detalladas para el desarrollo, configuración e instalación de una Skill de Convocación de Expertos dentro del entorno Antigravity V9. El documento se fundamenta en la documentación maestra del sistema ("ANTIGRAVITY V9: SYSTEM ROLES MASTERFILE") y en los protocolos de flujos de trabajo atómicos ("Atomic Swarms"), abordando desde la anatomía del archivo SKILL.md hasta la lógica de los disparadores semánticos y la gestión de memoria persistente. El objetivo es capacitar a los ingenieros de sistemas para implementar una capa de orquestación robusta que elimine la microgestión y garantice la adherencia a protocolos de eficiencia estrictos.   
 
-## **2\. Marco Teórico y Arquitectura del Sistema Antigravity V9**
+### **2.1. El Paradigma de la Carga Perezosa (Lazy Loading)**
 
-Para comprender la mecánica de la convocación de expertos, es imperativo diseccionar primero la arquitectura subyacente de Antigravity V9. A diferencia de los modelos de lenguaje monolíticos que intentan resolver todas las tareas dentro de una única ventana de contexto, Antigravity opera bajo una arquitectura de **Divulgación Progresiva** y **Especialización Modular**.
+Para garantizar el máximo aprovechamiento de la ventana de contexto y reducir el gasto innecesario de tokens de planificación, Antigravity V9 opera bajo una estrategia de **Carga Perezosa**. 
+
+A diferencia de los enfoques de "Reconocimiento Total" (Eager Loading), donde se leen todos los archivos al inicio, el sistema ahora sigue estas reglas de eficiencia:
+1. **Acceso bajo Demanda**: Un archivo solo es leído si la tarea actual lo requiere estrictamente y la información no reside en el contexto actual.
+2. **Descubrimiento Selectivo**: Las herramientas de búsqueda y descripción de habilidades (`find-skills`) se invocan solo cuando las capacidades nativas son insuficientes.
+3. **Mantenimiento de Contexto Magro**: Se prioriza mantener la ventana de contexto limpia de datos históricos o estructurales irrelevantes para la ejecución inmediata.
 
 ### **2.1. La Jerarquía de Roles del Sistema (System Roles Masterfile)**
 
@@ -26,7 +31,7 @@ El sistema define cinco roles "Expertos" que actúan como los destinatarios de l
 
 * **Rol 01: Code & Security Auditor (Ingeniero de Seguridad):** Su mandato primario es la seguridad sobre la funcionalidad. Utiliza metodologías STRIDE y razonamiento "Deep Think" para trazar vectores de ataque. Es el único rol autorizado para bloquear un despliegue basándose en hallazgos de vulnerabilidades.     
 * **Rol 02: Software Architect (Arquitecto Líder):** Opera bajo el paradigma *Context-Driven Development* (Conductor). Su restricción principal es "Specs First" (Especificaciones Primero); tiene prohibido escribir código de implementación sin antes generar artefactos de diseño fundamentados en documentación real (notebooklm-query).     
-* **Rol 03: Infra & DevOps Orchestrator (SRE/DevOps):** Es el custodio del entorno de ejecución. Su protocolo exige un "Reconocimiento" (ls \-R) antes de cualquier modificación y la delegación de tareas de larga duración a procesos en segundo plano.     
+* **Rol 03: Infra & DevOps Orchestrator (SRE/DevOps):** Es el custodio del entorno de ejecución. Su protocolo prioriza el **Reconocimiento Bajo Demanda**; solo explora la infraestructura si la tarea de despliegue o modificación lo requiere.
 * **Rol 04: Technical Documentation Expert (Escritor Técnico):** Responsable de la "Verificación de Realidad". Su función crítica es asegurar que la documentación coincida con el código fuente actual, evitando alucinaciones documentales mediante la validación externa de enlaces y comandos.     
 * **Rol 05: QA & Automated Testing Expert (Ingeniero de Automatización):** Encargado de la validación autónoma. Utiliza agent-browser para simular la experiencia del usuario final, detectando errores que las pruebas unitarias podrían pasar por alto.   
 
@@ -108,9 +113,9 @@ El documento debe comenzar estableciendo la identidad del agente. En este caso, 
 
 Se debe codificar el bucle de tres pasos como reglas imperativas:
 
-1. **Análisis de Estado (Project State):** Instruir al agente para leer el contexto. "¿Estamos en diseño o producción?".  
-2. **Descubrimiento (Find-Skills):** Mandato obligatorio de ejecutar find-skills antes de cualquier delegación.  
-3. **Delegación (Summoning):** Instrucciones para seleccionar uno de los roles autorizados (01-05) y generar el payload de delegación.
+1. **Justificación de Acceso**: Evaluar si la información necesaria ya está en el contexto. 
+2. **Acceso Selectivo**: Leer solo los archivos o ejecutar `find-skills` si es estrictamente necesario.
+3. **Delegación Ágil**: Seleccionar el rol experto y delegar sin pasos burocráticos intermedios.
 
 #### **Formato de Salida Estructurado**
 
